@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#FFFFFF">
+<title>Calculating your IQ score…</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light only;
+    --bg:#FFFFFF;
+    --bg2:#F3F6FC;
+    --panel:#FFFFFF;
+    --line:#E5E9F2;
+    --mint:#16C2A3;
+    --violet:#7C6FF0;
+    --accent-ink:#0C8E76;
+    --gold:#E0A100;
+    --text:#10162A;
+    --muted:#697091;
+    --intensity:0;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100dvh;background-color:#FFFFFF}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--text);
+    background:
+      linear-gradient(180deg, #FFFFFF 0%, #F4F8FD 45%, #E6F0FB 100%);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* solid white paint layer (app may strip html/body bg, so paint via a real element) */
+  .page-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      linear-gradient(180deg, #FFFFFF 0%, #F4F8FD 45%, #E6F0FB 100%);
+  }
+
+  /* ---------- top bar ---------- */
+  header{
+    position:relative;z-index:2;flex:none;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;background:#fff;padding:clamp(8px,1.3vh,14px) 24px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center}
+  .brand .brand-logo{height:44px;width:auto;display:block}
+  #title .hl{color:#1a3cff}
+
+  /* warning gate modal */
+  .gate{
+    position:fixed;inset:0;z-index:50;display:none;
+    align-items:center;justify-content:center;padding:24px 24px calc(24px + 12vh);
+    background:rgba(150,160,185,.18);
+    -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  }
+  .gate.show{display:flex;animation:gatefade .25s ease}
+  @keyframes gatefade{from{opacity:0}to{opacity:1}}
+  .gate-card{
+    width:min(420px,100%);background:#fff;border-radius:20px;
+    border:2px solid #5B86E8;padding:clamp(16px,3.6vw,22px);
+    box-shadow:0 30px 80px rgba(16,22,42,.28);
+    text-align:center;animation:gatepop .28s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes gatepop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+  .gate-card h2{
+    margin:0 0 10px;color:#2F6BFF;font-size:clamp(18px,4.8vw,22px);
+    font-weight:800;letter-spacing:.04em;
+  }
+  .gate-card p{margin:0;color:var(--text);font-size:clamp(14px,3.6vw,16px);line-height:1.45}
+  .gate-note{
+    display:flex;align-items:center;gap:11px;text-align:left;
+    background:#F1F3F8;border-radius:12px;padding:11px 14px;margin:13px 0;
+    color:var(--text);font-size:clamp(13px,3.5vw,15px);line-height:1.4;
+  }
+  .gate-note svg{flex:none;color:#2F6BFF}
+  .gate-btn{
+    width:100%;border:0;cursor:pointer;border-radius:12px;
+    padding:13px;font-size:clamp(14px,3.8vw,16px);font-weight:800;
+    letter-spacing:.04em;color:#fff;background:#1a3cff;
+    box-shadow:0 10px 26px rgba(26,60,255,.32);transition:background .15s,filter .15s;
+  }
+  .gate-btn:active{transform:translateY(1px)}
+
+  /* above-average question modal */
+  #gate2, #gate3 { padding-bottom: calc(24px + 22vh); }
+  .q2-card{display:flex;flex-direction:column;align-items:center;gap:clamp(16px,3.4vw,22px)}
+  .q2-spark{width:clamp(52px,14vw,66px);height:clamp(52px,14vw,66px)}
+  .q2-q{margin:0;text-align:center;color:var(--text);
+    font-size:clamp(16px,4.4vw,19px);font-weight:600;line-height:1.35}
+  .q2-btns{display:flex;gap:12px;width:100%}
+  .q2-btns .gate-btn{flex:1}
+
+  .namefield{display:flex;align-items:center;gap:8px}
+  .namefield label{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+  .namefield input{
+    background:#F3F6FC;
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    padding:8px 12px;border-radius:10px;width:140px;outline:none;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .namefield input:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(77,227,196,.15)}
+  .namefield input::placeholder{color:var(--muted)}
+
+  /* ---------- main ---------- */
+  main{
+    position:relative;z-index:2;
+    flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:flex-start;text-align:center;
+    padding:clamp(14px,3vh,30px) clamp(16px,5vw,40px) clamp(8px,2vh,18px);
+    gap:clamp(8px,2vh,22px);
+  }
+
+  /* progress bar */
+  .pbar{
+    width:100%;max-width:560px;height:clamp(24px,3.2vh,32px);
+    background:var(--line);border-radius:999px;position:relative;overflow:hidden;
+  }
+  .pbar-fill{
+    position:absolute;top:0;bottom:0;left:0;width:0;border-radius:999px;
+    background:#1a3cff;transition:width .25s linear;
+  }
+  .pbar-pct{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    color:#fff;font-weight:700;font-size:clamp(13px,1.9vh,15px);
+    letter-spacing:.01em;text-shadow:0 1px 3px rgba(0,0,0,.28);
+  }
+  .pbar-divider{
+    width:100%;max-width:560px;height:1px;background:var(--line);
+    margin:clamp(6px,1.6vh,14px) 0 clamp(2px,1vh,8px);
+  }
+
+  /* heading */
+  .heading{width:100%;max-width:560px;text-align:left;align-self:center;display:flex;flex-direction:column;gap:clamp(4px,1vh,10px)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;
+    font-size:clamp(22px,5vh,34px);letter-spacing:-.025em;line-height:1.1}
+  .heading p{color:var(--muted);font-size:clamp(12px,1.8vh,14.5px);line-height:1.38}
+
+  /* measures */
+  .measures{
+    width:100%;max-width:560px;display:flex;flex-direction:column;
+    gap:clamp(6px,1.5vh,15px);
+  }
+  .measure{display:flex;align-items:center;gap:14px;text-align:left}
+  .box{
+    width:clamp(26px,3.6vh,32px);height:clamp(26px,3.6vh,32px);flex:none;
+    border-radius:9px;border:2px solid #C9D0E0;background:#fff;
+    display:flex;align-items:center;justify-content:center;transition:.25s;
+  }
+  .measure.done .box{background:#1a3cff;border-color:#1a3cff}
+  .box .check{width:18px;height:18px;display:none}
+  .measure.done .box .check{display:block}
+  .measure .name{font-size:clamp(15px,2.5vh,19px);font-weight:500;color:var(--text)}
+
+  /* result */
+  .result{
+    max-width:460px;display:none;flex-direction:column;align-items:center;gap:20px;
+    animation:rise .6s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .result .eyebrow{font-family:'Space Mono',monospace;font-size:11px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--accent-ink)}
+  .score{font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(64px,16vw,104px);line-height:.9;letter-spacing:-.04em;
+    background:linear-gradient(120deg,var(--mint),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .result p{color:var(--muted);font-size:14px;line-height:1.55}
+  .cta{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:15px;color:#08110E;
+    background:linear-gradient(120deg,var(--mint),#8FF3DD);
+    border:none;border-radius:999px;padding:14px 30px;cursor:pointer;
+    box-shadow:0 8px 30px rgba(77,227,196,.3);transition:transform .15s,box-shadow .15s}
+  @media (hover:hover){ .cta:hover{transform:translateY(-2px);box-shadow:0 12px 38px rgba(77,227,196,.42)} }
+  .cta:active{transform:translateY(0)}
+  .ghost{background:none;border:1px solid var(--line);color:var(--muted);
+    font-family:'Inter',sans-serif;font-size:13px;border-radius:999px;
+    padding:11px 22px;cursor:pointer;transition:border-color .2s,color .2s}
+  @media (hover:hover){ .ghost:hover{border-color:var(--mint);color:var(--text)} }
+
+footer{--bg:#f7f9ff;--light-blue:#dce8f8;--navy:#0a1560;--blue:#1a3cff;--text:#1e293b;--muted:#64748b;position:relative;z-index:2;flex:none;background:var(--bg);color:var(--text);padding:40px 24px 24px;margin-top:45vh;}
+.logo-footer{margin-left:-18px;} .logo-footer img{height:65px;width:auto;display:block;}
+.footer-social{display:flex;gap:16px;margin-top:20px;margin-bottom:28px;}
+.footer-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#e2e8f0;color:var(--navy);text-decoration:none;}
+.footer-social a:hover{background:var(--light-blue);}
+.footer-section{margin-bottom:28px;}
+.footer-section h4{color:var(--navy);font-size:0.95rem;font-weight:700;margin-bottom:12px;}
+.footer-section a{display:block;width:fit-content;color:var(--muted);text-decoration:none;font-size:0.9rem;margin-bottom:10px;}
+.footer-section a:hover{color:var(--blue);}
+.footer-support-btn{display:flex;align-items:center;gap:10px;border:1.5px solid #cbd5e1;border-radius:12px;padding:12px 16px;width:fit-content;color:var(--muted);font-size:0.88rem;text-decoration:none;margin-top:4px;}
+.footer-support-btn:hover{border-color:var(--blue);color:var(--blue);}
+.footer-lang-wrap{margin:20px 0 16px;}
+.lang-btn{display:flex;align-items:center;gap:8px;border:1.5px solid #cbd5e1;border-radius:12px;padding:10px 16px;background:white;font-size:0.9rem;color:var(--text);cursor:pointer;width:fit-content;}
+.lang-btn:hover{border-color:var(--blue);}
+.lang-dropdown{display:none;position:absolute;background:white;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.13);max-height:320px;overflow-y:auto;z-index:999;min-width:220px;padding:8px 0;}
+.lang-dropdown.open{display:block;}
+.lang-option{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;font-size:0.9rem;color:var(--text);}
+.lang-option:hover{background:var(--light-blue);}
+.lang-option .flag{font-size:1.2rem;}
+.footer-bottom{border-top:1px solid #e2e8f0;margin-top:12px;padding-top:20px;font-size:0.78rem;text-align:center;color:var(--muted);}
+
+  .hide{display:none !important}
+
+  @media (max-width:480px){
+    .namefield label{display:none}
+    .namefield input{width:120px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .signal{animation:none !important}
+    .node,.core{animation:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="page-bg" aria-hidden="true"></div>
+
+<header>
+  <div class="brand"><a href="https://trueiqreport.com"><img class="brand-logo" src="data:image/png;base64,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" alt="TrueIQ" /></a></div>
+</header>
+
+<main>
+  <!-- analyzing state -->
+  <div id="analyzing" style="display:flex;flex-direction:column;align-items:center;gap:clamp(8px,2vh,22px);width:100%;min-height:0">
+    <div class="heading">
+      <h1 id="title">Calculating your <span class="hl">IQ score</span>…</h1>
+      <p>Our model is mapping your answers across five core measures of intelligence. This takes a moment.</p>
+    </div>
+
+    <div class="pbar">
+      <div class="pbar-fill" id="pbarFill"></div>
+      <span class="pbar-pct" id="pbarPct">0%</span>
+    </div>
+    <div class="pbar-divider"></div>
+
+    <div class="measures" id="measures"></div>
+  </div>
+
+</main>
+
+<!-- warning gate -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <h2 id="gateTitle">WARNING</h2>
+    <p>Your results may surprise you. IQ report reveals hidden strengths and growth areas — a powerful tool for unlocking your potential.</p>
+    <div class="gate-note">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="4" y="11" width="16" height="9" rx="2"/>
+        <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+      </svg>
+      <span>Your results remain confidential and personally yours.</span>
+    </div>
+    <button class="gate-btn" id="gateBtn">I UNDERSTAND</button>
+  </div>
+</div>
+
+<!-- above-average question -->
+<div class="gate" id="gate2" role="dialog" aria-modal="true" aria-labelledby="q2Title">
+  <div class="gate-card q2-card">
+    <svg class="q2-spark" viewBox="0 0 64 64" fill="#1a3cff" aria-hidden="true">
+      <path d="M25 6c1.7 9.4 4.9 12.6 14.3 14.3C29.9 22 26.7 25.2 25 34.6 23.3 25.2 20.1 22 10.7 20.3 20.1 18.6 23.3 15.4 25 6Z"/>
+      <path d="M46 30c1 5.6 2.9 7.5 8.5 8.5C48.9 39.5 47 41.4 46 47c-1-5.6-2.9-7.5-8.5-8.5C43.1 37.5 45 35.6 46 30Z"/>
+    </svg>
+    <p id="q2Title" class="q2-q">Do you think your IQ is above average?</p>
+    <div class="q2-btns">
+      <button class="gate-btn q2-btn" id="q2No">No</button>
+      <button class="gate-btn q2-btn" id="q2Yes">Yes</button>
+    </div>
+  </div>
+</div>
+
+<!-- first-test question -->
+<div class="gate" id="gate3" role="dialog" aria-modal="true" aria-labelledby="q3Title">
+  <div class="gate-card q2-card">
+    <svg class="q2-spark" viewBox="0 0 64 64" fill="#1a3cff" aria-hidden="true">
+      <path d="M25 6c1.7 9.4 4.9 12.6 14.3 14.3C29.9 22 26.7 25.2 25 34.6 23.3 25.2 20.1 22 10.7 20.3 20.1 18.6 23.3 15.4 25 6Z"/>
+      <path d="M46 30c1 5.6 2.9 7.5 8.5 8.5C48.9 39.5 47 41.4 46 47c-1-5.6-2.9-7.5-8.5-8.5C43.1 37.5 45 35.6 46 30Z"/>
+    </svg>
+    <p id="q3Title" class="q2-q">Is this your first IQ test?</p>
+    <div class="q2-btns">
+      <button class="gate-btn q2-btn" id="q3No">No</button>
+      <button class="gate-btn q2-btn" id="q3Yes">Yes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- the five measures (edit freely) ---------- */
+const MEASURES = [
+  { name:'Memory',        threshold:22, glyph:'M12 2a5 5 0 0 0-5 5c-2 .5-3 2-3 4s1 3.5 3 4v2a3 3 0 0 0 5 2 3 3 0 0 0 5-2v-2c2-.5 3-2 3-4s-1-3.5-3-4a5 5 0 0 0-5-5Z' },
+  { name:'Speed',         threshold:40, glyph:'M13 2 4 14h7l-1 8 9-12h-7l1-8Z' },
+  { name:'Reaction',      threshold:58, glyph:'M12 3v4m0 10v4m9-9h-4M7 12H3m13.5-5.5-2.8 2.8M9.3 14.7l-2.8 2.8m11 0-2.8-2.8M9.3 9.3 6.5 6.5' },
+  { name:'Concentration', threshold:76, glyph:'M12 5c-5 0-9 4.5-9 7s4 7 9 7 9-4.5 9-7-4-7-9-7Zm0 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z' },
+  { name:'Logic',         threshold:92, glyph:'M4 7h6V4M14 4v3h6M4 17h6v3M14 20v-3h6M10 7v10m4-10v10' },
+];
+
+/* staged, deliberately anti-climactic timeline — ~20s of fill
+   (the warning pause is excluded; start time shifts when acknowledged).
+   each entry = jump up to `to`% over `ramp` ms, then sit frozen for `hold` ms. */
+const SEGMENTS = [
+  { to:4,   ramp:1500, hold:1000 },  // barely moving off the line
+  { to:10,  ramp:1400, hold:900  },  // slow creep
+  { to:17,  ramp:1300, hold:900  },  // still crawling
+  { to:24,  ramp:1200, hold:900  },  // Memory ticks off
+  { to:33,  ramp:800,  hold:600  },  // tease — nothing happens
+  { to:41,  ramp:800,  hold:900  },  // Speed ticks off, longer pause
+  { to:52,  ramp:800,  hold:500  },  // another tease
+  { to:60,  ramp:800,  hold:900  },  // Reaction ticks off, dead stop
+  { to:72,  ramp:800,  hold:500  },
+  { to:78,  ramp:700,  hold:900  },  // Concentration ticks off, long stall
+  { to:88,  ramp:700,  hold:500  },
+  { to:93,  ramp:700,  hold:800  },  // Logic ticks off
+  { to:97,  ramp:700,  hold:800  },  // the classic "stuck at 97%" stall
+  { to:100, ramp:800,  hold:0    },
+];
+const TIMELINE = (()=>{
+  let t=0, from=0, segs=[];
+  for(const s of SEGMENTS){
+    const t0=t, t1=t+s.ramp, t2=t1+s.hold;
+    segs.push({t0,t1,t2,from,to:s.to});
+    from=s.to; t=t2;
+  }
+  return {segs, total:t};
+})();
+const RUN_MS = TIMELINE.total;   // ~15.5s
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- build measure rows ---------- */
+const wrap = document.getElementById('measures');
+MEASURES.forEach((m,i)=>{
+  const row=document.createElement('div');
+  row.className='measure';row.dataset.i=i;
+  row.innerHTML=`
+    <span class="box">
+      <svg class="check" viewBox="0 0 24 24" fill="none" stroke="#fff"
+           stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5"/></svg>
+    </span>
+    <span class="name">${m.name}</span>`;
+  wrap.appendChild(row);
+});
+const rows = [...wrap.children];
+
+/* ---------- reviews carousel ---------- */
+const REVIEWS = [
+  { stars: 5, title: "Short but challenging", text: "It was short but challenging. Really enjoyed it.", author: "Emily Bennett", location: "🇬🇷 Greece" },
+  { stars: 5, title: "Very accurate results", text: "I was impressed by how accurate my results were. The analysis matched exactly what I already knew about myself.", author: "Marcus Thompson", location: "🇺🇸 United States" },
+  { stars: 5, title: "Fascinating experience", text: "Fascinating experience! The test was well-structured and the report gave me great insights into my cognitive abilities.", author: "Laura Klein", location: "🇩🇪 Germany" },
+  { stars: 4, title: "Great test overall", text: "Really enjoyed taking the test. Some questions were tricky but that's the point. The detailed report was worth it.", author: "James Rivera", location: "🇨🇦 Canada" },
+  { stars: 5, title: "Highly recommend!", text: "I've taken many IQ tests online and this is by far the most professional and detailed one. Highly recommend!", author: "Sophie Patel", location: "🇦🇺 Australia" },
+  { stars: 5, title: "Surprisingly thorough", text: "I didn't expect such a detailed breakdown. The cognitive profile section was especially eye-opening.", author: "Alexandre Noir", location: "🇫🇷 France" },
+  { stars: 4, title: "Good value for money", text: "The test was engaging and the results were presented clearly. Good value for the price.", author: "Daniel Wright", location: "🇬🇧 United Kingdom" },
+  { stars: 5, title: "Eye-opening results", text: "The results were eye-opening. I learned things about my thinking patterns I never knew before.", author: "Rafael Mendes", location: "🇧🇷 Brazil" },
+  { stars: 5, title: "Best IQ test online", text: "I've tried several IQ tests and this one stands out. The questions are well-designed and fair.", author: "Takeshi Hayashi", location: "🇯🇵 Japan" },
+  { stars: 4, title: "Solid and well-designed", text: "Clean interface, clear questions, and a well-structured report. Would definitely recommend to friends.", author: "Charlotte Berg", location: "🇳🇱 Netherlands" },
+  { stars: 5, title: "Worth every penny", text: "The detailed report alone is worth it. I shared my results with my therapist and she found it very useful.", author: "Fatima Okonkwo", location: "🇳🇬 Nigeria" },
+  { stars: 5, title: "Really fun to take", text: "I genuinely enjoyed the test. It challenged me in ways I didn't expect and the results were spot on.", author: "Kevin Lee", location: "🇰🇷 South Korea" },
+  { stars: 4, title: "Clear and professional", text: "Very professional presentation. The test felt legitimate and the results were delivered quickly.", author: "Vikram Singh", location: "🇮🇳 India" },
+  { stars: 5, title: "Impressed by the depth", text: "The level of detail in the report was impressive. It broke down each cognitive area individually.", author: "Paola Greco", location: "🇮🇹 Italy" },
+  { stars: 5, title: "Exceeded expectations", text: "I expected a simple score but got a full cognitive profile. Exceeded my expectations by a lot.", author: "Nour Al-Rashid", location: "🇦🇪 United Arab Emirates" },
+];
+
+(function buildReviews(){
+  let cur = 0;
+  const sec = document.createElement('div');
+  sec.id = 'reviewsSection';
+  sec.style.cssText = 'width:100%;max-width:560px;margin-top:clamp(6px,1.5vh,14px);';
+
+  const card = document.createElement('div');
+  card.style.cssText = 'background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;text-align:left;position:relative;';
+
+  function starsHTML(n){
+    return Array.from({length:5},(_,i)=>`<span style="color:${i<n?'#f5a623':'#d1d8e0'};font-size:15px;">★</span>`).join('');
+  }
+
+  const btnStyle = 'background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);padding:0 4px;line-height:1;';
+
+  function dotsHTML(){
+    return REVIEWS.map((_,i)=>`<span style="width:6px;height:6px;border-radius:50%;background:${i===cur?'#1a3cff':'var(--line)'};display:inline-block;transition:background .2s;"></span>`).join('');
+  }
+
+  function render(){
+    const r = REVIEWS[cur];
+    const shortText = r.text.length > 90 ? r.text.slice(0,90).replace(/\s\S+$/,'') + '…' : r.text;
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div style="display:flex;gap:2px;">${starsHTML(r.stars)}</div>
+        <span style="display:inline-flex;align-items:center;gap:4px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="13" height="13"><circle cx="10" cy="10" r="10" fill="#1877F2"/><path d="M6 10.5l3 3 5-5.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Verified</span>
+      </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:var(--text);margin-bottom:3px;">${r.title}</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.4;margin-bottom:6px;">${shortText}</div>
+      <div style="font-size:11.5px;color:var(--muted);font-weight:500;margin-bottom:8px;">${r.author} &nbsp;·&nbsp; ${r.location}</div>
+      <div style="border-top:1px solid var(--line);padding-top:7px;display:flex;align-items:center;justify-content:space-between;">
+        <button id="rv-prev" style="${btnStyle}">&#8592;</button>
+        <span style="font-size:11px;color:var(--muted);">Rated <strong style="color:var(--text);">4.8</strong> / 5 &nbsp;·&nbsp; <strong style="color:var(--text);">132,353</strong> reviews</span>
+        <button id="rv-next" style="${btnStyle}">&#8594;</button>
+      </div>
+    `;
+    card.querySelector('#rv-prev').onclick = ()=>{ cur=(cur-1+REVIEWS.length)%REVIEWS.length; render(); };
+    card.querySelector('#rv-next').onclick = ()=>{ cur=(cur+1)%REVIEWS.length; render(); };
+  }
+
+  sec.appendChild(card);
+  wrap.appendChild(sec);
+
+  render();
+
+  // auto-advance every 4s
+  setInterval(()=>{ cur=(cur+1)%REVIEWS.length; render(); }, 4000);
+})();
+
+/* ---------- elements + animation ---------- */
+const root=document.documentElement;
+const pbarFill=document.getElementById('pbarFill');
+const pbarPct=document.getElementById('pbarPct');
+const nameInput=document.getElementById('name');
+const title=document.getElementById('title');
+const analyzing=document.getElementById('analyzing');
+
+function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+function easeOut(t){return 1-Math.pow(1-t,3)}
+function getName(){ return nameInput ? nameInput.value.trim() : ''; }
+function setTitle(){
+  const n=getName();
+  const who = n ? `${n}'s` : 'your';
+  title.innerHTML = `Calculating ${who} <span class="hl">IQ score</span>…`;
+}
+if(nameInput) nameInput.addEventListener('input',setTitle);
+
+let raf, startT;
+// warning gate: show it at the very start, before the bar moves
+const GATE_AT = 0;
+let gateAck=false, pauseStart=0;
+const gateEl=document.getElementById('gate');
+
+// Scroll lock helpers
+function lockScroll(){
+  document.body.style.overflow='hidden';
+  document.body.style.touchAction='none';
+}
+function unlockScroll(){
+  document.body.style.overflow='';
+  document.body.style.touchAction='';
+}
+// Block touchmove on all gate overlays so backdrop swipe does nothing
+[gateEl, document.getElementById('gate2'), document.getElementById('gate3')].forEach(el=>{
+  el.addEventListener('touchmove', e=>e.preventDefault(), {passive:false});
+});
+
+function openGate(){
+  pauseStart=performance.now();
+  cancelAnimationFrame(raf);
+  lockScroll();
+  gateEl.classList.add('show');
+}
+function closeGate(){
+  if(gateAck) return;
+  gateAck=true;
+  gateEl.classList.remove('show');
+  unlockScroll();
+  startT += performance.now()-pauseStart;   // shift start so progress resumes where it froze
+  raf=requestAnimationFrame(frame);
+}
+document.getElementById('gateBtn').addEventListener('click',closeGate);
+
+// second question: fires around 40% progress, after the warning is acknowledged
+const Q2_AT = 40; // percent
+let q2Ack=false, q2PauseStart=0;
+const gate2El=document.getElementById('gate2');
+function openGate2(){
+  q2PauseStart=performance.now();
+  cancelAnimationFrame(raf);
+  lockScroll();
+  gate2El.classList.add('show');
+}
+function closeGate2(){
+  if(q2Ack) return;
+  q2Ack=true;
+  gate2El.classList.remove('show');
+  unlockScroll();
+  startT += performance.now()-q2PauseStart;   // resume where it froze
+  raf=requestAnimationFrame(frame);
+}
+document.getElementById('q2No').addEventListener('click',closeGate2);
+document.getElementById('q2Yes').addEventListener('click',closeGate2);
+
+// third question: fires around 70% progress, after the second is answered
+const Q3_AT = 70; // percent
+let q3Ack=false, q3PauseStart=0;
+const gate3El=document.getElementById('gate3');
+function openGate3(){
+  q3PauseStart=performance.now();
+  cancelAnimationFrame(raf);
+  lockScroll();
+  gate3El.classList.add('show');
+}
+function closeGate3(){
+  if(q3Ack) return;
+  q3Ack=true;
+  gate3El.classList.remove('show');
+  unlockScroll();
+  startT += performance.now()-q3PauseStart;   // resume where it froze
+  raf=requestAnimationFrame(frame);
+}
+document.getElementById('q3No').addEventListener('click',closeGate3);
+document.getElementById('q3Yes').addEventListener('click',closeGate3);
+function progressAt(elapsed){
+  if(elapsed>=TIMELINE.total) return 100;
+  for(const s of TIMELINE.segs){
+    if(elapsed < s.t2){
+      if(elapsed <= s.t1){
+        const k = s.t1>s.t0 ? (elapsed-s.t0)/(s.t1-s.t0) : 1;
+        return s.from + (s.to-s.from)*easeOut(k);   // jumping up
+      }
+      return s.to;                                   // frozen — the pause
+    }
+  }
+  return 100;
+}
+function frame(now){
+  if(!startT) startT=now;
+  const elapsed = now-startT;
+  let p = 0;
+  try{
+    p = progressAt(elapsed);
+
+    pbarFill.style.width = p + '%';
+    pbarPct.textContent = Math.round(p) + '%';
+
+    MEASURES.forEach((m,i)=>{
+      rows[i].classList.toggle('done', p>=m.threshold);
+    });
+  }catch(err){ /* never let a single frame kill the loop */ }
+
+  if(elapsed<TIMELINE.total){
+    if(!gateAck && elapsed>=GATE_AT){ openGate(); return; }
+    if(gateAck && !q2Ack && p>=Q2_AT){ openGate2(); return; }
+    if(q2Ack && !q3Ack && p>=Q3_AT){ openGate3(); return; }
+    raf=requestAnimationFrame(frame);
+  }
+  else finish();
+}
+
+function finish(){
+  // analysis complete — redirect to the checkout page
+  window.location.href = 'https://trueiqreport.com/email/checkout';
+}
+
+function run(){
+  cancelAnimationFrame(raf);
+  startT=null;
+  gateAck=false;                 // show the warning again each run
+  q2Ack=false;                   // and the above-average question
+  q3Ack=false;                   // and the first-test question
+  gateEl.classList.remove('show');
+  gate2El.classList.remove('show');
+  gate3El.classList.remove('show');
+  analyzing.style.display='flex';
+  rows.forEach(r=>r.classList.remove('done','active'));
+  setTitle();
+  raf=requestAnimationFrame(frame);
+}
+
+setTitle();
+run();
+</script>
+
+<footer>
+  <div class="logo-footer"><img src="data:image/png;base64,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" alt="TrueIQ" /></div>
+
+  <!-- Social icons -->
+  <div class="footer-social">
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/u/true-iq" target="_blank" title="Reddit">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/trueiq.app" target="_blank" title="Instagram">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
+        <rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="url(#ig2)"/>
+        <circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
+      </svg>
+    </a>
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/trueiqapp" target="_blank" title="Facebook">
+      <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" fill="#1877F2"/>
+        <path d="M16.5 8H14.5C13.9 8 13.5 8.4 13.5 9V11H16.5L16 14H13.5V22H10.5V14H8.5V11H10.5V9C10.5 6.8 12.1 5 14.5 5H16.5V8Z" fill="white"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Customer Support -->
+  <div class="footer-section">
+    <h4>Customer Support</h4>
+    <a href="https://trueiqreport.com/cancellation">How to Cancel</a>
+    <a href="https://trueiqreport.com/contact" class="footer-support-btn">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      <span>Customer Support<br><small>24/7/365</small></span>
+    </a>
+  </div>
+
+  <!-- Legal -->
+  <div class="footer-section">
+    <h4>Legal</h4>
+    <a href="https://trueiqreport.com/privacy">Privacy Policy</a>
+    <a href="https://trueiqreport.com/terms">Terms &amp; Conditions</a>
+    <a href="https://trueiqreport.com/cookie">Cookie Policy</a>
+    <a href="https://trueiqreport.com/refund">Refund Policy</a>
+  </div>
+
+  <!-- About Us -->
+  <div class="footer-section">
+    <h4>About Us</h4>
+    <a href="https://trueiqreport.com/help">Help</a>
+    <a href="https://trueiqreport.com/pricing">Pricing</a>
+  </div>
+
+
+  <!-- Language Selector -->
+  <div class="footer-lang-wrap" style="position:relative;">
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">
+      <span id="currentFlag">🇺🇸</span>
+      <span id="currentLang">English</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option" onclick="setLang('en','English','🇺🇸')"><span class="flag">🇺🇸</span> English</div>
+      <div class="lang-option" onclick="setLang('es','Español','🇪🇸')"><span class="flag">🇪🇸</span> Español</div>
+      <div class="lang-option" onclick="setLang('fr','Français','🇫🇷')"><span class="flag">🇫🇷</span> Français</div>
+      <div class="lang-option" onclick="setLang('de','Deutsch','🇩🇪')"><span class="flag">🇩🇪</span> Deutsch</div>
+      <div class="lang-option" onclick="setLang('pt','Português','🇧🇷')"><span class="flag">🇧🇷</span> Português</div>
+      <div class="lang-option" onclick="setLang('it','Italiano','🇮🇹')"><span class="flag">🇮🇹</span> Italiano</div>
+      <div class="lang-option" onclick="setLang('nl','Nederlands','🇳🇱')"><span class="flag">🇳🇱</span> Nederlands</div>
+      <div class="lang-option" onclick="setLang('ru','Русский','🇷🇺')"><span class="flag">🇷🇺</span> Русский</div>
+      <div class="lang-option" onclick="setLang('zh','中文','🇨🇳')"><span class="flag">🇨🇳</span> 中文</div>
+      <div class="lang-option" onclick="setLang('ja','日本語','🇯🇵')"><span class="flag">🇯🇵</span> 日本語</div>
+      <div class="lang-option" onclick="setLang('ko','한국어','🇰🇷')"><span class="flag">🇰🇷</span> 한국어</div>
+      <div class="lang-option" onclick="setLang('ar','العربية','🇸🇦')"><span class="flag">🇸🇦</span> العربية</div>
+      <div class="lang-option" onclick="setLang('hi','हिन्दी','🇮🇳')"><span class="flag">🇮🇳</span> हिन्दी</div>
+      <div class="lang-option" onclick="setLang('tr','Türkçe','🇹🇷')"><span class="flag">🇹🇷</span> Türkçe</div>
+      <div class="lang-option" onclick="setLang('pl','Polski','🇵🇱')"><span class="flag">🇵🇱</span> Polski</div>
+      <div class="lang-option" onclick="setLang('sv','Svenska','🇸🇪')"><span class="flag">🇸🇪</span> Svenska</div>
+      <div class="lang-option" onclick="setLang('da','Dansk','🇩🇰')"><span class="flag">🇩🇰</span> Dansk</div>
+      <div class="lang-option" onclick="setLang('no','Norsk','🇳🇴')"><span class="flag">🇳🇴</span> Norsk</div>
+      <div class="lang-option" onclick="setLang('fi','Suomi','🇫🇮')"><span class="flag">🇫🇮</span> Suomi</div>
+      <div class="lang-option" onclick="setLang('el','Ελληνικά','🇬🇷')"><span class="flag">🇬🇷</span> Ελληνικά</div>
+      <div class="lang-option" onclick="setLang('cs','Čeština','🇨🇿')"><span class="flag">🇨🇿</span> Čeština</div>
+      <div class="lang-option" onclick="setLang('ro','Română','🇷🇴')"><span class="flag">🇷🇴</span> Română</div>
+      <div class="lang-option" onclick="setLang('hu','Magyar','🇭🇺')"><span class="flag">🇭🇺</span> Magyar</div>
+      <div class="lang-option" onclick="setLang('sk','Slovenčina','🇸🇰')"><span class="flag">🇸🇰</span> Slovenčina</div>
+      <div class="lang-option" onclick="setLang('uk','Українська','🇺🇦')"><span class="flag">🇺🇦</span> Українська</div>
+      <div class="lang-option" onclick="setLang('he','עברית','🇮🇱')"><span class="flag">🇮🇱</span> עברית</div>
+      <div class="lang-option" onclick="setLang('th','ไทย','🇹🇭')"><span class="flag">🇹🇭</span> ไทย</div>
+      <div class="lang-option" onclick="setLang('vi','Tiếng Việt','🇻🇳')"><span class="flag">🇻🇳</span> Tiếng Việt</div>
+      <div class="lang-option" onclick="setLang('id','Bahasa Indonesia','🇮🇩')"><span class="flag">🇮🇩</span> Bahasa Indonesia</div>
+      <div class="lang-option" onclick="setLang('ms','Bahasa Melayu','🇲🇾')"><span class="flag">🇲🇾</span> Bahasa Melayu</div>
+      <div class="lang-option" onclick="setLang('tl','Filipino','🇵🇭')"><span class="flag">🇵🇭</span> Filipino</div>
+      <div class="lang-option" onclick="setLang('fa','فارسی','🇮🇷')"><span class="flag">🇮🇷</span> فارسی</div>
+      <div class="lang-option" onclick="setLang('bn','বাংলা','🇧🇩')"><span class="flag">🇧🇩</span> বাংলা</div>
+      <div class="lang-option" onclick="setLang('ur','اردو','🇵🇰')"><span class="flag">🇵🇰</span> اردو</div>
+      <div class="lang-option" onclick="setLang('ta','தமிழ்','🇱🇰')"><span class="flag">🇱🇰</span> தமிழ்</div>
+      <div class="lang-option" onclick="setLang('sw','Kiswahili','🇰🇪')"><span class="flag">🇰🇪</span> Kiswahili</div>
+      <div class="lang-option" onclick="setLang('af','Afrikaans','🇿🇦')"><span class="flag">🇿🇦</span> Afrikaans</div>
+      <div class="lang-option" onclick="setLang('ca','Català','🇪🇸')"><span class="flag">🏴</span> Català</div>
+      <div class="lang-option" onclick="setLang('hr','Hrvatski','🇭🇷')"><span class="flag">🇭🇷</span> Hrvatski</div>
+      <div class="lang-option" onclick="setLang('bg','Български','🇧🇬')"><span class="flag">🇧🇬</span> Български</div>
+      <div class="lang-option" onclick="setLang('lt','Lietuvių','🇱🇹')"><span class="flag">🇱🇹</span> Lietuvių</div>
+      <div class="lang-option" onclick="setLang('lv','Latviešu','🇱🇻')"><span class="flag">🇱🇻</span> Latviešu</div>
+      <div class="lang-option" onclick="setLang('et','Eesti','🇪🇪')"><span class="flag">🇪🇪</span> Eesti</div>
+      <div class="lang-option" onclick="setLang('sl','Slovenščina','🇸🇮')"><span class="flag">🇸🇮</span> Slovenščina</div>
+      <div class="lang-option" onclick="setLang('sq','Shqip','🇦🇱')"><span class="flag">🇦🇱</span> Shqip</div>
+      <div class="lang-option" onclick="setLang('sr','Srpski','🇷🇸')"><span class="flag">🇷🇸</span> Srpski</div>
+      <div class="lang-option" onclick="setLang('mk','Македонски','🇲🇰')"><span class="flag">🇲🇰</span> Македонски</div>
+      <div class="lang-option" onclick="setLang('is','Íslenska','🇮🇸')"><span class="flag">🇮🇸</span> Íslenska</div>
+      <div class="lang-option" onclick="setLang('az','Azərbaycan','🇦🇿')"><span class="flag">🇦🇿</span> Azərbaycan</div>
+      <div class="lang-option" onclick="setLang('ka','ქართული','🇬🇪')"><span class="flag">🇬🇪</span> ქართული</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">Copyright &copy; 2026 TrueIQ™. All rights reserved. For entertainment or educational purposes only.</div>
+</footer>
+
+<script>
+function toggleLang(){var d=document.getElementById('langDropdown');if(d)d.classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.footer-lang-wrap')){var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');}});
+function setLang(code,name,flag){
+  var cl=document.getElementById('currentLang');if(cl)cl.textContent=name;
+  var cf=document.getElementById('currentFlag');if(cf)cf.textContent=flag;
+  var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');
+  function doTranslate(){var s=document.querySelector('.goog-te-combo');if(s){s.value=code;s.dispatchEvent(new Event('change'));return true;}return false;}
+  if(!doTranslate()){var t=0;var tm=setInterval(function(){t++;if(doTranslate()||t>40)clearInterval(tm);},150);}
+}
+</script>
+</body>
+</html>
