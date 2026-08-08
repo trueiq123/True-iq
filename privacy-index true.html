@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How TrueIQ collects, uses, and protects your personal data, and the rights you have over it." />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Privacy Policy | TrueIQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #ffffff; color: #0f172a; min-height: 100vh;
+      display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== header (from checkout page) ===== */
+    .site-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; background: #fff; border-bottom: 1px solid #e2e8f0;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .header-logo { display: flex; align-items: center; gap: 7px; }
+    .header-logo img { height: 44px; width: auto; display: block; }
+
+    /* ===== legal page ===== */
+    main { flex: 1 0 auto; width: 100%; }
+    .wrap { max-width: 780px; margin: 0 auto; padding: 26px 20px 72px; }
+
+    .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; color: #64748b; margin-bottom: 20px; }
+    .crumbs a { color: #64748b; text-decoration: underline; }
+    .crumbs a:hover { color: #1a56e8; }
+    .crumbs .sep { color: #94a3b8; }
+    .crumbs .current { color: #0f172a; font-weight: 700; }
+
+    h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.2; font-weight: 800; letter-spacing: -0.5px; }
+    .lede { margin: 0 0 8px; font-size: 17px; line-height: 1.6; color: #475569; }
+    .updated { margin: 0 0 26px; font-size: 14px; color: #94a3b8; }
+
+    .help-card {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+      background: #f7f9ff; border: 1px solid #dde4f5; border-radius: 14px;
+      padding: 20px; margin-bottom: 40px;
+    }
+    .help-card h2 { margin: 0 0 4px; font-size: 17px; font-weight: 700; }
+    .help-card p { margin: 0; font-size: 15px; color: #64748b; }
+    .help-card a {
+      display: inline-flex; align-items: center; padding: 12px 18px; border-radius: 10px;
+      background: #1a56e8; color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap;
+    }
+    .help-card a:hover { background: #1244be; }
+
+    .toc { border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px 22px; margin-bottom: 44px; }
+    .toc h2 { margin: 0 0 12px; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #64748b; }
+    .toc ol { margin: 0; padding-left: 20px; }
+    .toc li { margin-bottom: 8px; font-size: 15.5px; }
+    .toc a { color: #334155; text-decoration: none; }
+    .toc a:hover { color: #1a56e8; text-decoration: underline; }
+
+    section { margin-bottom: 44px; scroll-margin-top: 90px; }
+    h2.sec { margin: 0 0 18px; font-size: 22px; font-weight: 800; letter-spacing: -0.3px; color: #0f172a; padding-bottom: 10px; border-bottom: 2px solid #1a56e8; }
+    h3 { margin: 26px 0 10px; font-size: 17px; font-weight: 700; color: #0a1560; }
+    p { margin: 0 0 16px; font-size: 16.5px; line-height: 1.68; color: #1e293b; }
+    ul { margin: 0 0 16px; padding-left: 22px; }
+    li { margin-bottom: 9px; font-size: 16.5px; line-height: 1.6; color: #1e293b; }
+    a.inline { color: #1a56e8; }
+    strong { color: #0f172a; }
+
+    table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 15.5px; }
+    th, td { text-align: left; padding: 12px 14px; border: 1px solid #e2e8f0; vertical-align: top; line-height: 1.5; }
+    th { background: #f7f9ff; font-weight: 700; color: #0a1560; width: 42%; }
+
+    .back-top { display: inline-block; margin-top: 34px; font-size: 15px; color: #64748b; text-decoration: none; }
+    .back-top:hover { color: #1a56e8; }
+
+    :focus-visible { outline: 3px solid rgba(26,86,232,.45); outline-offset: 2px; border-radius: 6px; }
+    @media (min-width: 720px) { h1 { font-size: 40px; } .wrap { padding: 34px 24px 88px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+
+/* ===== merged footer styles (from Trust page) ===== */
+    :root{ --blue:#1a3cff; --muted:#707b8a; --text:#16263b; --navy:#0a1560; --light-blue:#dce8f8; }
+    footer{position:relative;clear:both;z-index:0;border-top:1px solid #e2e8f0;background:#f7f9ff;color:var(--text);padding:40px 24px 24px;font-family:'Inter',system-ui,-apple-system,sans-serif;}
+    .logo-footer{margin-left:-18px;} .logo-footer img{height:65px;width:auto;display:block;}
+    .footer-social{display:flex;gap:16px;margin-top:20px;margin-bottom:28px;}
+    .footer-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#e2e8f0;color:var(--navy);text-decoration:none;}
+    .footer-social a:hover{background:var(--light-blue);}
+    .footer-section{margin-bottom:28px;}
+    .footer-section h4{color:var(--navy);font-size:0.95rem;font-weight:700;margin-bottom:12px;}
+    .footer-section a{display:block;width:fit-content;color:var(--muted);text-decoration:none;font-size:0.9rem;margin-bottom:10px;}
+    .footer-section a:hover{color:var(--blue);}
+    .footer-support-btn{display:flex;align-items:center;gap:10px;border:1.5px solid #cbd5e1;border-radius:12px;padding:12px 16px;width:fit-content;color:var(--muted);font-size:0.88rem;text-decoration:none;margin-top:4px;}
+    .footer-support-btn:hover{border-color:var(--blue);color:var(--blue);}
+    .footer-lang-wrap{margin:20px 0 16px;}
+    .lang-btn{display:flex;align-items:center;gap:8px;border:1.5px solid #cbd5e1;border-radius:12px;padding:10px 16px;background:white;font-size:0.9rem;color:var(--text);cursor:pointer;width:fit-content;}
+    .lang-btn:hover{border-color:var(--blue);}
+    .lang-dropdown{display:none;position:absolute;background:white;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.13);max-height:320px;overflow-y:auto;z-index:999;min-width:220px;padding:8px 0;}
+    .lang-dropdown.open{display:block;}
+    .lang-option{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;font-size:0.9rem;color:var(--text);}
+    .lang-option:hover{background:var(--light-blue);}
+    .lang-option .flag{font-size:1.2rem;}
+    .footer-bottom{border-top:1px solid #e2e8f0;margin-top:12px;padding-top:20px;font-size:0.78rem;text-align:center;color:var(--muted);}
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-logo">
+    <a href="https://trueiqreport.com/"><img src="data:image/png;base64,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" alt="TrueIQ" /></a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="top">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="https://trueiqreport.com/">Home</a>
+      <span class="sep">&gt;</span>
+      <a href="https://trueiqreport.com/help">Help Center</a>
+      <span class="sep">&gt;</span>
+      <span class="current">Privacy Policy</span>
+    </nav>
+
+    <h1>Privacy Policy</h1>
+    <p class="lede">How TrueIQ collects, uses, and protects your personal data &mdash; and the rights you have over it.</p>
+    <p class="updated">Last updated: August 5, 2026</p>
+
+    <div class="help-card">
+      <div>
+        <h2>Questions?</h2>
+        <p>Most answers live in our Help Center.</p>
+      </div>
+      <a href="https://trueiqreport.com/help">Visit Help Center</a>
+    </div>
+
+    <nav class="toc" aria-label="Contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#s1">Who we are and what this covers</a></li>
+        <li><a href="#s2">Terms used in this policy</a></li>
+        <li><a href="#s3">What we collect</a></li>
+        <li><a href="#s4">Why we process it</a></li>
+        <li><a href="#s5">Cookies and analytics</a></li>
+        <li><a href="#s6">Who we share data with</a></li>
+        <li><a href="#s7">Where data lives and how it is secured</a></li>
+        <li><a href="#s8">If something goes wrong</a></li>
+        <li><a href="#s9">Your rights</a></li>
+        <li><a href="#s10">How long we keep data</a></li>
+        <li><a href="#s11">International transfers</a></li>
+        <li><a href="#s12">Age requirement</a></li>
+        <li><a href="#s13">Changes to this policy</a></li>
+        <li><a href="#s14">Contact us</a></li>
+      </ol>
+    </nav>
+
+    <section id="s1">
+      <h2 class="sec">1. Who we are and what this covers</h2>
+      <p>TrueIQ (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the online cognitive assessment available at trueiqreport.com. This policy explains what personal data we handle when you take a test, create an account, or subscribe &mdash; and what you can ask us to do with it.</p>
+      <p>It applies to everyone who uses the service, wherever you are, across every part of the platform: the test itself, the results and certificate, checkout and billing, and any support conversation you have with us.</p>
+      <p>We are the data controller for the information described here. Our legal entity and registered address are listed in Section 14.</p>
+      <p>This policy sits alongside our <a class="inline" href="https://trueiqreport.com/terms">Terms &amp; Conditions</a>, which govern your use of the service and your subscription, and our <a class="inline" href="https://trueiqreport.com/cookie">Cookie Policy</a>, which sets out the individual cookies we set and what each one does.</p>
+    </section>
+
+    <section id="s2">
+      <h2 class="sec">2. Terms used in this policy</h2>
+      <table>
+        <tr><th>Service</th><td>The TrueIQ test, results, certificate, subscription, and everything else we make available at trueiqreport.com</td></tr>
+        <tr><th>User (&ldquo;you&rdquo;)</th><td>Anyone who visits or uses the service, with or without an account</td></tr>
+        <tr><th>Personal data</th><td>Any information that identifies you, or could identify you when combined with other information we hold</td></tr>
+        <tr><th>Processing</th><td>Anything we do with personal data &mdash; collecting, storing, using, sharing, or deleting it</td></tr>
+        <tr><th>Data controller</th><td>The party that decides why and how personal data is used. For this service, that is us</td></tr>
+        <tr><th>Data processor</th><td>A company that handles data on our instructions, such as our payment or hosting providers</td></tr>
+        <tr><th>Cookie</th><td>A small file a website stores on your device to remember something between visits</td></tr>
+      </table>
+    </section>
+
+    <section id="s3">
+      <h2 class="sec">3. What we collect</h2>
+
+      <h3>3.1 Information you give us</h3>
+      <ul>
+        <li><strong>Email address</strong> &mdash; entered before your results are unlocked. This is the only piece of contact information the test itself asks for.</li>
+        <li><strong>Name and billing details</strong> &mdash; collected by our payment provider when you subscribe.</li>
+        <li><strong>Support messages</strong> &mdash; anything you write to us, including the address you write from.</li>
+      </ul>
+
+      <h3>3.2 Information from your use of the test</h3>
+      <ul>
+        <li><strong>Your score and result profile</strong>, along with the date and time you completed the test.</li>
+        <li><strong>Progress through the funnel</strong> &mdash; for example, whether you reached checkout and whether you started a payment. We use this to understand where people get stuck.</li>
+        <li><strong>How you move around the site</strong> &mdash; pages viewed, time on page, and which features you use.</li>
+      </ul>
+
+      <h3>3.3 Payment information</h3>
+      <p>We never see or store your full card number. Payments run through our payment providers, Stripe and PayPal, which return only a token plus limited identifying details &mdash; typically the card brand, the last four digits, and the expiry date &mdash; so that we can show you which card is on file and process your renewal.</p>
+
+      <h3>3.4 Technical information</h3>
+      <ul>
+        <li><strong>Device and browser</strong> &mdash; operating system, browser and version, screen size, language setting.</li>
+        <li><strong>Connection</strong> &mdash; IP address, approximate location derived from it, and time zone.</li>
+        <li><strong>Diagnostics</strong> &mdash; error messages, load times, and similar signals that tell us when something on the site is broken.</li>
+      </ul>
+
+      <h3>3.5 Categories of personal information collected</h3>
+      <p>California law asks us to describe what we collect using its own set of categories. Over the past twelve months we have collected the following. We do not sell personal information for money, but our use of advertising cookies means some of it is <strong>shared for cross-context behavioural advertising</strong>, as California defines that term. Section 9 explains how to opt out.</p>
+      <table>
+        <tr><th>Identifiers</th><td>Email address, name, IP address, account and customer identifiers</td></tr>
+        <tr><th>Commercial information</th><td>Subscription status, billing history, tokenised payment method details</td></tr>
+        <tr><th>Internet or network activity</th><td>Pages viewed, features used, progress through the test and checkout, error and performance data</td></tr>
+        <tr><th>Geolocation data</th><td>Approximate location inferred from your IP address. We do not collect precise location</td></tr>
+        <tr><th>Inferences</th><td>Your score and the result profile generated from your answers</td></tr>
+        <tr><th>Sources</th><td>You, your device and browser, and our payment providers</td></tr>
+        <tr><th>Recipients</th><td>The service providers and advertising partners named in Section 6, and no one else except where the law requires it</td></tr>
+      </table>
+      <p>We do not collect sensitive personal information as California defines it &mdash; no government identifiers, precise geolocation, racial or ethnic origin, health data, or contents of your messages beyond what you choose to send our support team.</p>
+    </section>
+
+    <section id="s4">
+      <h2 class="sec">4. Why we process it</h2>
+
+      <h3>4.1 To run the service</h3>
+      <p>Delivering your score and certificate, sending them to the address you gave us, managing your account and subscription, taking payment, and answering your questions.</p>
+
+      <h3>4.2 To keep the service working and safe</h3>
+      <p>Finding and fixing bugs, monitoring performance, preventing fraudulent or abusive use, and protecting the platform and its users.</p>
+
+      <h3>4.3 To improve what we offer</h3>
+      <p>Looking at aggregate patterns &mdash; how people move through the test, where they drop off, which features get used &mdash; to make the product better. This work relies on grouped statistics rather than individual profiles.</p>
+
+      <h3>4.4 To reach new users</h3>
+      <p>We advertise TrueIQ on social and video platforms. To do that, we place advertising tags on the site that tell those platforms when someone arrives from one of our ads and whether they went on to take the test or subscribe. This lets us measure which ads work, avoid showing ads to people who have already signed up, and reach audiences similar to our existing users.</p>
+      <p>These tags run only where you have accepted advertising cookies, or where local law otherwise permits.</p>
+
+      <h3>4.5 Automated scoring</h3>
+      <p>Your score is calculated automatically from your answers. No person reviews your responses, and the result is produced by a fixed scoring method rather than a system that profiles you or makes decisions about you.</p>
+      <p>The score has no legal or similarly significant effect: it does not determine access to credit, employment, education, insurance, or any other service, and we do not use it to make decisions about you beyond delivering the result and certificate you asked for. The test is for educational and entertainment purposes and is not a clinical or professional assessment.</p>
+      <p>If you think your result was calculated incorrectly, write to us and a person will look at it. You can also ask us to delete it.</p>
+
+      <h3>4.6 Our legal grounds</h3>
+      <ul>
+        <li><strong>Performance of a contract</strong> &mdash; giving you the service you signed up for, including billing.</li>
+        <li><strong>Legitimate interests</strong> &mdash; security, fraud prevention, and product improvement, weighed against your privacy each time.</li>
+        <li><strong>Legal obligation</strong> &mdash; keeping tax and payment records for as long as the law requires.</li>
+        <li><strong>Consent</strong> &mdash; for anything optional, including non-essential cookies. You can withdraw it whenever you like.</li>
+      </ul>
+    </section>
+
+    <section id="s5">
+      <h2 class="sec">5. Cookies and analytics</h2>
+      <p>We use cookies and similar technologies in three groups. Essential ones keep your session alive and remember where you are in the test &mdash; the site cannot work without them. Analytics cookies help us count visits and spot problems. Advertising cookies and pixels, described in Section 6, measure our ad campaigns and are set only with your consent. Our <a class="inline" href="https://trueiqreport.com/cookie">Cookie Policy</a> lists them individually.</p>
+      <p>You can clear or block cookies through your browser settings, and use your device's advertising controls or an ad blocker to limit tracking. Blocking essential cookies will stop parts of the test from working; blocking the rest will not.</p>
+      <p>Our emails to you are transactional &mdash; receipts, your certificate, account and support messages. We do not send marketing email.</p>
+    </section>
+
+    <section id="s6">
+      <h2 class="sec">6. Who we share data with</h2>
+      <h3>6.1 Service providers</h3>
+      <p>We do not sell your personal data for money. We share it with companies that help us run the service, and only as far as they need it to do their job:</p>
+      <table>
+        <tr><th>Stripe</th><td>Payment processing, subscription billing, and fraud checks</td></tr>
+        <tr><th>PayPal</th><td>Payment processing and fraud checks for customers who pay by PayPal</td></tr>
+        <tr><th>Supabase</th><td>Database and account infrastructure where your email, score, and subscription status are stored</td></tr>
+        <tr><th>Vercel</th><td>Website hosting and delivery</td></tr>
+      </table>
+      <p>Each of these acts on our instructions under a contract that requires them to protect your data.</p>
+
+      <h3>6.2 Advertising partners</h3>
+      <p>We advertise TrueIQ across the major social and video platforms, and each provides a tag or pixel that we place on the site to measure whether its ads are working. The platforms we currently work with are:</p>
+      <table>
+        <tr><th>Meta</th><td>Advertising on Facebook and Instagram, campaign measurement, and audience building</td></tr>
+        <tr><th>Google</th><td>Advertising on YouTube, Google Search, and the Google Display Network, plus conversion measurement</td></tr>
+        <tr><th>TikTok</th><td>Advertising on TikTok and conversion measurement</td></tr>
+      </table>
+      <p>What these partners receive is limited: an anonymous or hashed identifier, the fact that you visited certain pages, whether you completed the test or subscribed, and technical details such as your device type and IP address. They never receive your test answers or your score.</p>
+      <p>Unlike our service providers, these platforms use that information for their own purposes as well as ours &mdash; measuring campaigns, building audience segments, and improving their own ad targeting. Because of that, California and several other states treat this as <strong>&ldquo;sharing&rdquo; for cross-context behavioural advertising</strong>, and in some states as a &ldquo;sale,&rdquo; even though no money changes hands for your data. Section 9 explains how to opt out, and doing so will not affect your access to the test.</p>
+
+      <h3>6.3 Other disclosures</h3>
+      <p>We may disclose information where the law requires it, or to establish or defend a legal claim. If the business is ever sold or merged, data may transfer to the new owner, who will remain bound by this policy.</p>
+    </section>
+
+    <section id="s7">
+      <h2 class="sec">7. Where data lives and how it is secured</h2>
+      <p>Your data sits with established cloud providers rather than servers we run ourselves. Traffic between your browser and our systems is encrypted in transit, and stored data is encrypted at rest by our infrastructure providers.</p>
+      <p>On our side, access is limited to the people who need it, database rules restrict each account to its own records, and payment credentials never touch our servers &mdash; they stay with Stripe and PayPal, both of which are PCI DSS certified.</p>
+      <p>No system is perfectly secure, and we will not claim otherwise. What we can commit to is using reputable providers, keeping access tight, and acting quickly when something looks wrong.</p>
+    </section>
+
+    <section id="s8">
+      <h2 class="sec">8. If something goes wrong</h2>
+      <p>If personal data is exposed, lost, or accessed without authorisation, we will investigate immediately, contain the problem, and assess what it means for the people affected.</p>
+      <p>Where a breach is likely to put you at risk, we will email you within 72 hours of confirming it. That message will tell you what happened, what data was involved, what we have done, and what you should do next. Where the law requires it, we will also notify the relevant supervisory authority.</p>
+    </section>
+
+    <section id="s9">
+      <h2 class="sec">9. Your rights</h2>
+      <p>Wherever you live, you can ask us to:</p>
+      <ul>
+        <li>Show you the personal data we hold about you</li>
+        <li>Correct anything inaccurate</li>
+        <li>Delete your data</li>
+        <li>Send you a copy in a portable, machine-readable format</li>
+        <li>Stop or limit a particular use</li>
+        <li>Withdraw consent you previously gave</li>
+      </ul>
+      <p>If you are in the UK or EU, these come from the GDPR and include the right to complain to your national data protection authority. If you are in California, the CCPA and CPRA add the right to know what we collect and share, the right to opt out of sale or sharing, and the right not to be treated differently for exercising your rights. We do share personal information with the advertising partners listed in Section 6.2, which counts as &ldquo;sharing&rdquo; under California law, so you have the right to opt out. You may also use an authorised agent to make a request on your behalf, with written proof of their authority. Residents of Canada, Australia, and other regions have comparable rights under their own laws.</p>
+      <h3>Opting out of advertising</h3>
+      <p>You can stop your data going to our advertising partners in any of these ways:</p>
+      <ul>
+        <li>Use the <a class="inline" href="https://trueiqreport.com/do-not-sell">Do Not Sell or Share My Personal Information</a> link, also available in our footer</li>
+        <li>Decline advertising cookies in our cookie banner, or change your choice at any time</li>
+        <li>Turn on Global Privacy Control in your browser &mdash; we treat that signal as a valid opt-out request</li>
+        <li>Use the ad settings on each platform directly, or the opt-out tools run by the Digital Advertising Alliance and the Network Advertising Initiative</li>
+      </ul>
+      <p>Opting out has no effect on your access to the test, your score, or your subscription.</p>
+
+      <h3>Making a request</h3>
+      <p>Email <a class="inline" href="mailto:support@trueiqreport.com">support@trueiqreport.com</a> from the address linked to your account. We will confirm receipt within 72 hours and answer within 30 days &mdash; or tell you if we need longer, which we will not do without a reason. For requests involving sensitive data, we may ask you to verify your identity first.</p>
+      <p>To cancel a subscription, you do not need to email anyone. Use the <a class="inline" href="https://trueiqreport.com/cancellation">Cancellation Portal</a>.</p>
+    </section>
+
+    <section id="s10">
+      <h2 class="sec">10. How long we keep data</h2>
+      <table>
+        <tr><th>Account and test results</th><td>While your account is open, then deleted on request</td></tr>
+        <tr><th>Payment and invoice records</th><td>As long as tax and accounting law requires</td></tr>
+        <tr><th>Support conversations</th><td>Two years from your last message</td></tr>
+        <tr><th>Technical and security logs</th><td>13 months</td></tr>
+        <tr><th>Analytics data</th><td>Kept in aggregate form, which cannot be traced back to you</td></tr>
+        <tr><th>Deletion requests</th><td>Processed within 30 days; residual copies clear from backups within 90 days</td></tr>
+      </table>
+    </section>
+
+    <section id="s11">
+      <h2 class="sec">11. International transfers</h2>
+      <p>Our providers operate globally, so your data may be processed in a country other than your own, including the United States. When data moves out of the UK or European Economic Area, we rely on approved safeguards &mdash; usually Standard Contractual Clauses &mdash; so that it keeps an equivalent level of protection.</p>
+    </section>
+
+    <section id="s12">
+      <h2 class="sec">12. Age requirement</h2>
+      <p>TrueIQ is for adults aged 18 and over. We do not knowingly collect data from anyone younger. If we learn that an account belongs to a minor, we will close it and delete the associated data. If you believe a child has given us their information, write to us and we will remove it.</p>
+    </section>
+
+    <section id="s13">
+      <h2 class="sec">13. Changes to this policy</h2>
+      <p>We update this policy as the service changes. Minor edits &mdash; clarifications, formatting, a new provider in the same category &mdash; take effect when posted, and the date at the top will tell you when that was.</p>
+      <p>If we make a change that meaningfully affects your rights or how we use your data, we will email registered users at least five days before it takes effect. Continuing to use the service after that date means you accept the updated policy. If you would rather not, you can cancel.</p>
+    </section>
+
+    <section id="s14">
+      <h2 class="sec">14. Contact us</h2>
+      <p>For anything in this policy, including privacy requests:</p>
+      <ul>
+        <li><strong>Email:</strong> <a class="inline" href="mailto:support@trueiqreport.com">support@trueiqreport.com</a></li>
+        <li><strong>Help Center:</strong> <a class="inline" href="https://trueiqreport.com/help">trueiqreport.com/help</a></li>
+        <li><strong>Post:</strong> 32 N Gould St, Sheridan, WY 82801, United States</li>
+        <li><strong>Legal entity:</strong> TrueIQ LLC</li>
+      </ul>
+      <p>This policy is governed by the laws of the State of Wyoming, United States. Please write to us first if you have a complaint &mdash; most things are quicker to fix that way than through a formal process.</p>
+      <a class="back-top" href="#top">&uarr; Back to top</a>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="logo-footer"><img src="data:image/png;base64,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" alt="TrueIQ" /></div>
+
+  <!-- Social icons -->
+  <div class="footer-social">
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/u/true-iq" target="_blank" title="Reddit">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/trueiq.app" target="_blank" title="Instagram">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
+        <rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="url(#ig2)"/>
+        <circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
+      </svg>
+    </a>
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/trueiqapp" target="_blank" title="Facebook">
+      <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" fill="#1877F2"/>
+        <path d="M16.5 8H14.5C13.9 8 13.5 8.4 13.5 9V11H16.5L16 14H13.5V22H10.5V14H8.5V11H10.5V9C10.5 6.8 12.1 5 14.5 5H16.5V8Z" fill="white"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Customer Support -->
+  <div class="footer-section">
+    <h4>Customer Support</h4>
+    <a href="https://trueiqreport.com/cancellation">How to Cancel</a>
+    <a href="https://trueiqreport.com/contact" class="footer-support-btn">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      <span>Customer Support<br><small>24/7/365</small></span>
+    </a>
+  </div>
+
+  <!-- Legal -->
+  <div class="footer-section">
+    <h4>Legal</h4>
+    <a href="https://trueiqreport.com/privacy">Privacy Policy</a>
+    <a href="https://trueiqreport.com/terms">Terms &amp; Conditions</a>
+    <a href="https://trueiqreport.com/cookie">Cookie Policy</a>
+    <a href="https://trueiqreport.com/refund">Refund Policy</a>
+  </div>
+
+  <!-- About Us -->
+  <div class="footer-section">
+    <h4>About Us</h4>
+    <a href="https://trueiqreport.com/help">Help</a>
+    <a href="https://trueiqreport.com/pricing">Pricing</a>
+  </div>
+
+
+  <!-- Language Selector -->
+  <div class="footer-lang-wrap" style="position:relative;">
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">
+      <span id="currentFlag">🇺🇸</span>
+      <span id="currentLang">English</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option" onclick="setLang('en','English','🇺🇸')"><span class="flag">🇺🇸</span> English</div>
+      <div class="lang-option" onclick="setLang('es','Español','🇪🇸')"><span class="flag">🇪🇸</span> Español</div>
+      <div class="lang-option" onclick="setLang('fr','Français','🇫🇷')"><span class="flag">🇫🇷</span> Français</div>
+      <div class="lang-option" onclick="setLang('de','Deutsch','🇩🇪')"><span class="flag">🇩🇪</span> Deutsch</div>
+      <div class="lang-option" onclick="setLang('pt','Português','🇧🇷')"><span class="flag">🇧🇷</span> Português</div>
+      <div class="lang-option" onclick="setLang('it','Italiano','🇮🇹')"><span class="flag">🇮🇹</span> Italiano</div>
+      <div class="lang-option" onclick="setLang('nl','Nederlands','🇳🇱')"><span class="flag">🇳🇱</span> Nederlands</div>
+      <div class="lang-option" onclick="setLang('ru','Русский','🇷🇺')"><span class="flag">🇷🇺</span> Русский</div>
+      <div class="lang-option" onclick="setLang('zh','中文','🇨🇳')"><span class="flag">🇨🇳</span> 中文</div>
+      <div class="lang-option" onclick="setLang('ja','日本語','🇯🇵')"><span class="flag">🇯🇵</span> 日本語</div>
+      <div class="lang-option" onclick="setLang('ko','한국어','🇰🇷')"><span class="flag">🇰🇷</span> 한국어</div>
+      <div class="lang-option" onclick="setLang('ar','العربية','🇸🇦')"><span class="flag">🇸🇦</span> العربية</div>
+      <div class="lang-option" onclick="setLang('hi','हिन्दी','🇮🇳')"><span class="flag">🇮🇳</span> हिन्दी</div>
+      <div class="lang-option" onclick="setLang('tr','Türkçe','🇹🇷')"><span class="flag">🇹🇷</span> Türkçe</div>
+      <div class="lang-option" onclick="setLang('pl','Polski','🇵🇱')"><span class="flag">🇵🇱</span> Polski</div>
+      <div class="lang-option" onclick="setLang('sv','Svenska','🇸🇪')"><span class="flag">🇸🇪</span> Svenska</div>
+      <div class="lang-option" onclick="setLang('da','Dansk','🇩🇰')"><span class="flag">🇩🇰</span> Dansk</div>
+      <div class="lang-option" onclick="setLang('no','Norsk','🇳🇴')"><span class="flag">🇳🇴</span> Norsk</div>
+      <div class="lang-option" onclick="setLang('fi','Suomi','🇫🇮')"><span class="flag">🇫🇮</span> Suomi</div>
+      <div class="lang-option" onclick="setLang('el','Ελληνικά','🇬🇷')"><span class="flag">🇬🇷</span> Ελληνικά</div>
+      <div class="lang-option" onclick="setLang('cs','Čeština','🇨🇿')"><span class="flag">🇨🇿</span> Čeština</div>
+      <div class="lang-option" onclick="setLang('ro','Română','🇷🇴')"><span class="flag">🇷🇴</span> Română</div>
+      <div class="lang-option" onclick="setLang('hu','Magyar','🇭🇺')"><span class="flag">🇭🇺</span> Magyar</div>
+      <div class="lang-option" onclick="setLang('sk','Slovenčina','🇸🇰')"><span class="flag">🇸🇰</span> Slovenčina</div>
+      <div class="lang-option" onclick="setLang('uk','Українська','🇺🇦')"><span class="flag">🇺🇦</span> Українська</div>
+      <div class="lang-option" onclick="setLang('he','עברית','🇮🇱')"><span class="flag">🇮🇱</span> עברית</div>
+      <div class="lang-option" onclick="setLang('th','ไทย','🇹🇭')"><span class="flag">🇹🇭</span> ไทย</div>
+      <div class="lang-option" onclick="setLang('vi','Tiếng Việt','🇻🇳')"><span class="flag">🇻🇳</span> Tiếng Việt</div>
+      <div class="lang-option" onclick="setLang('id','Bahasa Indonesia','🇮🇩')"><span class="flag">🇮🇩</span> Bahasa Indonesia</div>
+      <div class="lang-option" onclick="setLang('ms','Bahasa Melayu','🇲🇾')"><span class="flag">🇲🇾</span> Bahasa Melayu</div>
+      <div class="lang-option" onclick="setLang('tl','Filipino','🇵🇭')"><span class="flag">🇵🇭</span> Filipino</div>
+      <div class="lang-option" onclick="setLang('fa','فارسی','🇮🇷')"><span class="flag">🇮🇷</span> فارسی</div>
+      <div class="lang-option" onclick="setLang('bn','বাংলা','🇧🇩')"><span class="flag">🇧🇩</span> বাংলা</div>
+      <div class="lang-option" onclick="setLang('ur','اردو','🇵🇰')"><span class="flag">🇵🇰</span> اردو</div>
+      <div class="lang-option" onclick="setLang('ta','தமிழ்','🇱🇰')"><span class="flag">🇱🇰</span> தமிழ்</div>
+      <div class="lang-option" onclick="setLang('sw','Kiswahili','🇰🇪')"><span class="flag">🇰🇪</span> Kiswahili</div>
+      <div class="lang-option" onclick="setLang('af','Afrikaans','🇿🇦')"><span class="flag">🇿🇦</span> Afrikaans</div>
+      <div class="lang-option" onclick="setLang('ca','Català','🇪🇸')"><span class="flag">🏴</span> Català</div>
+      <div class="lang-option" onclick="setLang('hr','Hrvatski','🇭🇷')"><span class="flag">🇭🇷</span> Hrvatski</div>
+      <div class="lang-option" onclick="setLang('bg','Български','🇧🇬')"><span class="flag">🇧🇬</span> Български</div>
+      <div class="lang-option" onclick="setLang('lt','Lietuvių','🇱🇹')"><span class="flag">🇱🇹</span> Lietuvių</div>
+      <div class="lang-option" onclick="setLang('lv','Latviešu','🇱🇻')"><span class="flag">🇱🇻</span> Latviešu</div>
+      <div class="lang-option" onclick="setLang('et','Eesti','🇪🇪')"><span class="flag">🇪🇪</span> Eesti</div>
+      <div class="lang-option" onclick="setLang('sl','Slovenščina','🇸🇮')"><span class="flag">🇸🇮</span> Slovenščina</div>
+      <div class="lang-option" onclick="setLang('sq','Shqip','🇦🇱')"><span class="flag">🇦🇱</span> Shqip</div>
+      <div class="lang-option" onclick="setLang('sr','Srpski','🇷🇸')"><span class="flag">🇷🇸</span> Srpski</div>
+      <div class="lang-option" onclick="setLang('mk','Македонски','🇲🇰')"><span class="flag">🇲🇰</span> Македонски</div>
+      <div class="lang-option" onclick="setLang('is','Íslenska','🇮🇸')"><span class="flag">🇮🇸</span> Íslenska</div>
+      <div class="lang-option" onclick="setLang('az','Azərbaycan','🇦🇿')"><span class="flag">🇦🇿</span> Azərbaycan</div>
+      <div class="lang-option" onclick="setLang('ka','ქართული','🇬🇪')"><span class="flag">🇬🇪</span> ქართული</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">Copyright &copy; 2026 TrueIQ™. All rights reserved. For entertainment or educational purposes only.</div>
+</footer>
+<script>
+  /* ===== Footer language selector (from checkout page) ===== */
+  function toggleLang(){var d=document.getElementById('langDropdown');if(d)d.classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.footer-lang-wrap')){var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');}});
+  function setLang(code,name,flag){
+    var cl=document.getElementById('currentLang');if(cl)cl.textContent=name;
+    var cf=document.getElementById('currentFlag');if(cf)cf.textContent=flag;
+    var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');
+    function doTranslate(){var s=document.querySelector('.goog-te-combo');if(s){s.value=code;s.dispatchEvent(new Event('change'));return true;}return false;}
+    if(!doTranslate()){var t=0;var tm=setInterval(function(){t++;if(doTranslate()||t>40)clearInterval(tm);},150);}
+  }
+</script>
+</body>
+</html>
